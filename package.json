@@ -15,8 +15,7 @@
     "build": "npm run clean && npm run transpile"
   },
   "dependencies": {
-    "js-cookie": "^2.2.1",
-    "weighted-random": "^0.1.0"
+    "js-cookie": "^2.2.1"
   },
   "devDependencies": {
     "@nuxt/types": "^2.14.7",
