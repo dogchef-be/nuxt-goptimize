@@ -4,7 +4,7 @@ NuxtJS module for Google Optimize
 
 ## Main features
 
-- Load Google Optimize
+- Run multiple experiments simultaneously
 - TypeScript support
 
 ## Setup
@@ -21,28 +21,48 @@ npm install nuxt-goptimize
 export default {
   // ...other config options
   modules: ["nuxt-goptimize"];
-  gOptimize: {
-    maxAge: '60',
+  googleOptimize: {
+    experiments: '~/experiments.js', // optional
+  }
+}
+```
+
+3. (Optional) TypeScript support. Add `nuxt-goptimize` to the `types` section of `tsconfig.json`:
+
+```json
+{
+  "compilerOptions": {
+    "types": [
+      "nuxt-goptimize"
+    ]
   }
 }
 ```
 
 ## Options
 
-### `publishableKey`
+### `experiments`
 
 - Type: `String`
+- Default: `~/experiments.js`
 
-Cookie's time to live.
+File path for your experiments definition.
 
 ## Usage
 
-It can be used inside templates like:
+It can be used inside components like:
 
-```html
-<div v-if="this.$gexp.variant('my-first-exp', 1)">
-  <my-component />
-</div>
+```js
+{
+  mounted() {
+    const activeVariant = this.$gexp('experiment-a');
+    if (activeVariant === 0) {
+      this.payBtnLabel = 'Place order';
+    } else {
+      this.payBtnLabel = 'Pay now!';
+    }
+  }
+}
 ```
 
 ## License
