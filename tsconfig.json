@@ -14,7 +14,7 @@
       "~/*": ["./*"]
     },
     "outDir": "dist",
-    "types": ["@nuxt/types"]
+    "types": ["@nuxt/types", "@types/google.analytics"]
   },
   "exclude": ["node_modules"],
   "include": ["lib"]
