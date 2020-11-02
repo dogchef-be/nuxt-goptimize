@@ -1,0 +1,28 @@
+{
+  "name": "nuxt-goptimize",
+  "version": "0.0.1",
+  "description": "Nuxt module for Google Optimize",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dogchef-be/nuxt-goptimize.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dogchef-be/nuxt-goptimize/issues"
+  },
+  "homepage": "https://github.com/dogchef-be/nuxt-goptimize#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@nuxt/types": "^2.14.7",
+    "@nuxt/typescript-build": "^0.6.7",
+    "@types/js-cookie": "^2.2.6",
+    "js-cookies": "^1.0.4",
+    "nuxt": "^2.14.7",
+    "typescript": "^3.9.7"
+  }
+}
