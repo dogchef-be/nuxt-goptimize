@@ -1,39 +1,42 @@
-import Cookies from 'js-cookie';
-import { Context, Plugin } from "@nuxt/types";
-import experiments from "~/experiments";
+import Cookies from "js-cookie";
+import { Plugin } from "@nuxt/types";
+import experiments from "<%= options.experiments %>";
 
-let context: Context;
+const COOKIE_PREFIX = "gopt";
 
-export function variant(experiment: string, variant: string) {
-  let goptimize = Cookies.get("goptimize");
+interface Experiment {
+  name: string;
+  id: string;
+  duration: number;
+  variants: [{ weight: number }];
+}
 
-  if (!goptimize || !goptimize.hasOwnProperty(experiment)) {
-    goptimize[experiment] = variant;
+export function experimentVariant(experimentName: string): number {
+  const experiment: Experiment = experiments.find(
+    (exp: Experiment) => exp.name === experimentName
+  );
 
-    const maxAge: number = experiments.forEach((exp: any) => {
-      if (exp.name === experiment) {
-        return exp.maxAge;
-      }
+  let activeVariant: string =
+    Cookies.get(`${COOKIE_PREFIX}_${experimentName}`) || "";
+
+  // Determine the active variant of the experiment
+  if (activeVariant.length === 0) {
+    activeVariant = "0";
+
+    Cookies.set(`${COOKIE_PREFIX}_${experiment}`, activeVariant, {
+      expires: experiment.duration,
     });
-
-    Cookies.set("goptimize", goptimize, { expires: maxAge });
   }
 
   if (window.ga) {
-    const experimentID: any = experiments.forEach((exp: any) => {
-      if (exp.name === experiment) {
-        return exp.experimentID;
-      }
-    });
-    const variant = goptimize[experiment];
-
-    window.ga("set", "exp", experimentID + "." + variant);
+    window.ga("set", "exp", experiment.id + "." + activeVariant);
   }
+
+  return Number.parseInt(activeVariant);
 }
 
-const gOptimizePlugin: Plugin = (ctx, inject): void => {
-  context = ctx;
-  inject("gexp", variant);
+const googleOptimizePlugin: Plugin = (ctx, inject): void => {
+  inject("gexp", experimentVariant);
 };
 
-export default gOptimizePlugin;
+export default googleOptimizePlugin;
