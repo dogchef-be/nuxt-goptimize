@@ -1,4 +1,4 @@
-import Cookies from "js-cookies";
+import Cookies from 'js-cookie';
 import { Context, Plugin } from "@nuxt/types";
 import experiments from "~/experiments";
 
