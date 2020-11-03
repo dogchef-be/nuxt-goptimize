@@ -1,6 +1,7 @@
 import Cookies from "js-cookie";
 import { Plugin } from "@nuxt/types";
 import experiments from "<%= options.experiments %>";
+import { weightedRandom } from "./utils/weighted-random";
 
 const COOKIE_PREFIX = "gopt";
 
@@ -21,10 +22,14 @@ export function experimentVariant(experimentName: string): number {
 
   // Determine the active variant of the experiment
   if (activeVariant.length === 0) {
-    activeVariant = "0";
+    const weights: number[] = experiment.variants.map((variant) =>
+      variant.weight === undefined ? 1 : variant.weight
+    );
+
+    activeVariant = weightedRandom(weights).toString();
 
     Cookies.set(`${COOKIE_PREFIX}_${experiment}`, activeVariant, {
-      expires: experiment.duration,
+      expires: experiment.duration
     });
   }
 
