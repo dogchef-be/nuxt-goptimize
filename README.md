@@ -1,5 +1,7 @@
 # nuxt-goptimize
 
+<a href="https://www.npmjs.com/package/nuxt-goptimize"><img src="https://img.shields.io/npm/v/nuxt-goptimize?style=flat-square"></a> <a href="https://www.npmjs.com/package/nuxt-goptimize"><img src="https://img.shields.io/npm/dt/nuxt-goptimize?style=flat-square"></a> <a href="#"><img src="https://img.shields.io/github/license/dogchef-be/nuxt-goptimize?style=flat-square"></a>
+
 NuxtJS module for Google Optimize
 
 ## Main features
@@ -32,9 +34,7 @@ export default {
 ```json
 {
   "compilerOptions": {
-    "types": [
-      "nuxt-goptimize"
-    ]
+    "types": ["nuxt-goptimize"]
   }
 }
 ```
@@ -47,6 +47,13 @@ export default {
 - Default: `~/experiments.js`
 
 File path for your experiments definition.
+
+### `eventHandler`
+
+- Type: `String`
+- Default: `ga`
+
+Event handler to let Google know about variants in-use. Supported: `ga` and `dataLayer`.
 
 ## Usage
 

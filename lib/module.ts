@@ -11,6 +11,7 @@ declare module "vue/types/vue" {
 export default function GoogleOptimizeModule(this: any): void {
   const defaults = {
     experiments: "~/experiments.js",
+    eventHandler: "ga",
   };
 
   const options = Object.assign({}, defaults, this.options.googleOptimize);

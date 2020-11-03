@@ -1,40 +1,66 @@
 import Cookies from "js-cookie";
 import { Plugin } from "@nuxt/types";
-import experiments from "<%= options.experiments %>";
-import { weightedRandom } from "./utils/weighted-random";
 
-const COOKIE_PREFIX = "gopt";
+const COOKIE_PREFIX: string = "gopt";
+const EVENT_HANDLER: string = "<%= options.eventHandler %>";
+const EXPERIMENTS: Experiment[] = require("<%= options.experiments %>");
 
-interface Experiment {
-  name: string;
-  id: string;
-  duration: number;
-  variants: [{ weight: number }];
+function weightedRandom(weights: number[]): string {
+  var totalWeight = 0,
+    i,
+    random;
+
+  for (i = 0; i < weights.length; i++) {
+    totalWeight += weights[i];
+  }
+
+  random = Math.random() * totalWeight;
+
+  for (i = 0; i < weights.length; i++) {
+    if (random < weights[i]) {
+      return i.toString();
+    }
+
+    random -= weights[i];
+  }
+
+  return "-1";
 }
 
 export function experimentVariant(experimentName: string): number {
-  const experiment: Experiment = experiments.find(
+  const experiment: Experiment | undefined = EXPERIMENTS.find(
     (exp: Experiment) => exp.name === experimentName
   );
 
+  if (!experiment) return 0;
+
+  // Determine the active variant of the experiment
   let activeVariant: string =
     Cookies.get(`${COOKIE_PREFIX}_${experimentName}`) || "";
 
-  // Determine the active variant of the experiment
   if (activeVariant.length === 0) {
-    const weights: number[] = experiment.variants.map((variant) =>
-      variant.weight === undefined ? 1 : variant.weight
+    const weights: number[] = experiment.variants.map((weight) =>
+      weight === undefined ? 1 : weight
     );
 
-    activeVariant = weightedRandom(weights).toString();
+    let retries = experiment.variants.length;
+    while (activeVariant === "-1" && retries-- > 0) {
+      activeVariant = weightedRandom(weights);
+    }
 
     Cookies.set(`${COOKIE_PREFIX}_${experiment}`, activeVariant, {
-      expires: experiment.duration
+      expires: experiment.maxAgeDays,
     });
   }
 
-  if (window.ga) {
-    window.ga("set", "exp", experiment.id + "." + activeVariant);
+  // Let Google know about the active experiment's variant
+  if (EVENT_HANDLER === "ga" && window.ga) {
+    window.ga("set", "exp", `${experiment.id}.${activeVariant}`);
+  } else if (EVENT_HANDLER === "dataLayer" && window.dataLayer) {
+    window.dataLayer.push({
+      expId: experiment.id,
+      expVar: activeVariant,
+    });
   }
 
   return Number.parseInt(activeVariant);
