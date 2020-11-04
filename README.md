@@ -2,12 +2,22 @@
 
 <a href="https://www.npmjs.com/package/nuxt-goptimize"><img src="https://img.shields.io/npm/v/nuxt-goptimize?style=flat-square"></a> <a href="https://www.npmjs.com/package/nuxt-goptimize"><img src="https://img.shields.io/npm/dt/nuxt-goptimize?style=flat-square"></a> <a href="#"><img src="https://img.shields.io/github/license/dogchef-be/nuxt-goptimize?style=flat-square"></a>
 
-NuxtJS module for Google Optimize
+NuxtJS module for A/B testing with Google Optimize
 
 ## Main features
 
 - Run multiple experiments simultaneously
 - TypeScript support
+- Cookies to persist variants for users
+- Event handlers: `ga` or `dataLayer`
+
+## Dependencies
+
+You can choose one of the following options:
+ - [analytics.js](https://developers.google.com/analytics/devguides/collection/analyticsjs)
+ - [@nuxtjs/google-analytics](https://github.com/nuxt-community/gooogle-analytics-module)
+ - Any other alternative which injects Google Analytics into your application (e.g. via 3rd-party services such as [Segment](https://segment.com)).
+
 
 ## Setup
 
@@ -29,7 +39,28 @@ export default {
 }
 ```
 
-3. (Optional) TypeScript support. Add `nuxt-goptimize` to the `types` section of `tsconfig.json`:
+3. Create the `experiments.js` in project's root with an array of your experiments. An example:
+
+```js
+/**
+ * {
+ *  name: string; A name to identify the experiment on this.$gexp('NAME_HERE')
+ *  id: string; Experiment ID
+ *  maxAgeDays: number; Persistent cookie of the active variant expires after x days
+ *  variants: number[]; An array of variants weights
+ * }
+ */
+module.exports = [
+  {
+    name: 'x',
+    id: '123123',
+    maxAgeDays: 20,
+    variants: [50],
+  },
+]
+```
+
+4. (Optional) TypeScript support. Add `nuxt-goptimize` to the `types` section of `tsconfig.json`:
 
 ```json
 {
@@ -52,8 +83,9 @@ File path for your experiments definition.
 
 - Type: `String`
 - Default: `ga`
+- Values: `ga`, `dataLayer`
 
-Event handler to let Google know about variants in-use. Supported: `ga` and `dataLayer`.
+Event handler to let Google know about variants in-use.
 
 ## Usage
 
@@ -61,6 +93,9 @@ It can be used inside components like:
 
 ```js
 {
+  data: () => ({
+    payBtnLabel: null as string | null,
+  }),
   mounted() {
     const activeVariant = this.$gexp('experiment-a');
     if (activeVariant === 0) {
@@ -71,6 +106,9 @@ It can be used inside components like:
   }
 }
 ```
+
+## Credits
+- [Brandon Mills](https://github.com/btmills) for `weightedRandom()`
 
 ## License
 
