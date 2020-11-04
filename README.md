@@ -17,7 +17,7 @@ You can choose one of the following options:
 
 - [analytics.js](https://developers.google.com/analytics/devguides/collection/analyticsjs)
 - [@nuxtjs/google-analytics](https://github.com/nuxt-community/gooogle-analytics-module)
-- Any other alternative which injects Google Analytics into your application (e.g. via 3rd-party services such as [Segment](https://segment.com)).
+- Any other alternative which injects Google Analytics into your application (e.g. 3rd-party such as [Segment](https://segment.com)).
 
 ## Setup
 
@@ -55,7 +55,7 @@ module.exports = [
     name: "experiment-x",
     id: "IUhKJR2MSTiPMVGAwJDFBL",
     maxAgeDays: 15,
-    variants: [50],
+    variants: [50, 50],
   },
 ];
 ```
@@ -97,7 +97,7 @@ It can be used inside components like:
     payBtnLabel: null as string | null,
   }),
   mounted() {
-    const activeVariant = this.$gexp('experiment-a');
+    const activeVariant = this.$gexp('experiment-x');
     if (activeVariant === 0) {
       this.payBtnLabel = 'Place order';
     } else {
