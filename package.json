@@ -1,7 +1,7 @@
 {
   "name": "nuxt-goptimize",
-  "version": "1.0.0",
-  "description": "NuxtJS module for Google Optimize",
+  "version": "1.0.0-alpha",
+  "description": "NuxtJS module for A/B testing with Google Optimize",
   "repository": "github:dogchef-be/nuxt-goptimize",
   "license": "MIT",
   "files": [

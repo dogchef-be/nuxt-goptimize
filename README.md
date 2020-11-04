@@ -9,15 +9,15 @@ NuxtJS module for A/B testing with Google Optimize
 - Run multiple experiments simultaneously
 - TypeScript support
 - Cookies to persist variants for users
-- Event handlers: `ga` or `dataLayer`
+- Event handlers `ga` or `dataLayer`
 
 ## Dependencies
 
 You can choose one of the following options:
- - [analytics.js](https://developers.google.com/analytics/devguides/collection/analyticsjs)
- - [@nuxtjs/google-analytics](https://github.com/nuxt-community/gooogle-analytics-module)
- - Any other alternative which injects Google Analytics into your application (e.g. via 3rd-party services such as [Segment](https://segment.com)).
 
+- [analytics.js](https://developers.google.com/analytics/devguides/collection/analyticsjs)
+- [@nuxtjs/google-analytics](https://github.com/nuxt-community/gooogle-analytics-module)
+- Any other alternative which injects Google Analytics into your application (e.g. via 3rd-party services such as [Segment](https://segment.com)).
 
 ## Setup
 
@@ -46,18 +46,18 @@ export default {
  * {
  *  name: string; A name to identify the experiment on this.$gexp('NAME_HERE')
  *  id: string; Experiment ID
- *  maxAgeDays: number; Persistent cookie of the active variant expires after x days
+ *  maxAgeDays: number; Number of days to persist the cookie of user's active variant
  *  variants: number[]; An array of variants weights
  * }
  */
 module.exports = [
   {
-    name: 'x',
-    id: '123123',
-    maxAgeDays: 20,
+    name: "experiment-x",
+    id: "IUhKJR2MSTiPMVGAwJDFBL",
+    maxAgeDays: 15,
     variants: [50],
   },
-]
+];
 ```
 
 4. (Optional) TypeScript support. Add `nuxt-goptimize` to the `types` section of `tsconfig.json`:
@@ -108,6 +108,7 @@ It can be used inside components like:
 ```
 
 ## Credits
+
 - [Brandon Mills](https://github.com/btmills) for `weightedRandom()`
 
 ## License
