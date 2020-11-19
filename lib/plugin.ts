@@ -5,6 +5,8 @@ const COOKIE_PREFIX: string = "gopt";
 const EVENT_HANDLER: string = "<%= options.eventHandler %>";
 const EXPERIMENTS: Experiment[] = require("<%= options.experiments %>");
 
+const reportedVariants: string[] = [];
+
 function weightedRandom(weights: number[]): string {
   var totalWeight = 0,
     i,
@@ -54,13 +56,19 @@ export function experimentVariant(experimentName: string): number {
   }
 
   // Let Google know about the active experiment's variant
-  if (EVENT_HANDLER === "ga" && window.ga) {
-    window.ga("set", "exp", `${experiment.id}.${activeVariant}`);
-  } else if (EVENT_HANDLER === "dataLayer" && window.dataLayer) {
-    window.dataLayer.push({
-      expId: experiment.id,
-      expVar: activeVariant,
-    });
+  if (reportedVariants.indexOf(experimentName) === -1) {
+    if (EVENT_HANDLER === "ga" && window.ga) {
+      window.ga("set", "exp", `${experiment.id}.${activeVariant}`);
+
+      reportedVariants.push(experimentName);
+    } else if (EVENT_HANDLER === "dataLayer" && window.dataLayer) {
+      window.dataLayer.push({
+        expId: experiment.id,
+        expVar: activeVariant,
+      });
+
+      reportedVariants.push(experimentName);
+    }
   }
 
   return Number.parseInt(activeVariant);
