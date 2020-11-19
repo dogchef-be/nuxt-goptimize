@@ -8,16 +8,16 @@ NuxtJS module for A/B testing with Google Optimize
 
 - Run multiple experiments simultaneously
 - TypeScript support
-- Cookies to persist variants for users
+- Cookies to persist variants across users
 - Event handlers `ga` or `dataLayer`
 
 ## Dependencies
 
-You can choose one of the following options:
+You can choose one of the following options which injects Google Analytics into your application:
 
 - [analytics.js](https://developers.google.com/analytics/devguides/collection/analyticsjs)
 - [@nuxtjs/google-analytics](https://github.com/nuxt-community/gooogle-analytics-module)
-- Any other alternative which injects Google Analytics into your application (e.g. 3rd-party such as [Segment](https://segment.com)).
+- 3rd-party such as [Segment](https://segment.com)
 
 ## Setup
 
