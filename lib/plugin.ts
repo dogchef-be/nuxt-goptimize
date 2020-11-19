@@ -24,7 +24,7 @@ function weightedRandom(weights: number[]): string {
     random -= weights[i];
   }
 
-  return "-1";
+  return "";
 }
 
 export function experimentVariant(experimentName: string): number {
@@ -44,7 +44,7 @@ export function experimentVariant(experimentName: string): number {
     );
 
     let retries = experiment.variants.length;
-    while (activeVariant === "-1" && retries-- > 0) {
+    while (activeVariant === "" && retries-- > 0) {
       activeVariant = weightedRandom(weights);
     }
 
