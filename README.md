@@ -4,6 +4,8 @@
 
 NuxtJS module for A/B testing with Google Optimize
 
+***Note: Google Optimize will be used for reporting (only).***
+
 ## Main features
 
 - Run multiple experiments simultaneously
@@ -20,6 +22,31 @@ You can choose one of the following options which injects Google Analytics into 
 - 3rd-party such as [Segment](https://segment.com)
 
 ## Setup
+
+### Google Optimize
+
+1. Create a new experiment:
+
+```
+Name: Experiment X
+Type of experience: A/B test
+```
+
+2. Add variants names:
+
+```
+Original: this.$gexp('my_experiment') = 0
+Variant A: this.$gexp('my_experiment') = 1
+Variant B: this.$gexp('my_experiment') = 2
+```
+
+3. Define a page targeting:
+
+`WHEN` `URL equals` `SERVER_SIDE`
+
+4. Define experiment's objectives.
+
+### Nuxt.js Module
 
 1. Add `nuxt-goptimize` dependency to your project:
 
@@ -45,7 +72,7 @@ export default {
 /**
  * {
  *  name: string; A name to identify the experiment on this.$gexp('NAME_HERE')
- *  id: string; Experiment ID
+ *  id: string; Experiment ID of Google Optimize
  *  maxAgeDays: number; Number of days to persist the cookie of user's active variant
  *  variants: number[]; An array of variants weights
  * }
