@@ -59,6 +59,7 @@ export function experimentVariant(experimentName: string): number {
   if (reported.indexOf(experimentName) === -1) {
     if (EVENT_HANDLER === "ga" && window.ga) {
       window.ga("set", "exp", `${experiment.id}.${activeVariant}`);
+      window.ga('send', 'pageview');
 
       reported.push(experimentName);
     } else if (EVENT_HANDLER === "dataLayer" && window.dataLayer) {
