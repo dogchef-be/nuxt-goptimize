@@ -1,10 +1,25 @@
-# nuxt-goptimize
+<h1 align="center">
+  nuxt-goptimize
+</h1>
+<p align="center">
+  NuxtJS module for A/B testing with Google Optimize<br />
+</p>
 
-<a href="https://www.npmjs.com/package/nuxt-goptimize"><img src="https://img.shields.io/npm/v/nuxt-goptimize?style=flat-square"></a> <a href="https://www.npmjs.com/package/nuxt-goptimize"><img src="https://img.shields.io/npm/dt/nuxt-goptimize?style=flat-square"></a> <a href="#"><img src="https://img.shields.io/github/license/dogchef-be/nuxt-goptimize?style=flat-square"></a>
+<p align="center">
+  <a href="https://www.npmjs.com/package/nuxt-goptimize"><img src="https://img.shields.io/npm/v/nuxt-goptimize?style=flat-square"></a> <a href="https://www.npmjs.com/package/nuxt-goptimize"><img src="https://img.shields.io/npm/dt/nuxt-goptimize?style=flat-square"></a> <a href="#"><img src="https://img.shields.io/github/license/dogchef-be/nuxt-goptimize?style=flat-square"></a>
+</p>
+<br />
 
-NuxtJS module for A/B testing with Google Optimize
+***Note: Google Optimize is used for reporting (only).***
 
-***Note: Google Optimize will be used for reporting (only).***
+## Table of contents
+- [Main features](#main-features)
+- [Dependencies](#dependencies)
+- [Setup](#setup)
+- [Options](#options)
+- [Usage](#usage)
+- [Credits](#credits)
+- [License](#license)
 
 ## Main features
 
