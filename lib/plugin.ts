@@ -31,7 +31,7 @@ function weightedRandom(weights: number[]): string {
 
 export function experimentVariant(
   experimentName: string,
-  variant = undefined
+  forceVariant = undefined
 ): number {
   const experiment: Experiment | undefined = EXPERIMENTS.find(
     (exp: Experiment) => exp.name === experimentName
@@ -41,8 +41,8 @@ export function experimentVariant(
     return 0;
   }
 
-  if (variant !== undefined) {
-    Cookies.set(`${COOKIE_PREFIX}_${experimentName}`, variant, {
+  if (forceVariant !== undefined) {
+    Cookies.set(`${COOKIE_PREFIX}_${experimentName}`, forceVariant, {
       expires: experiment.maxAgeDays,
     });
   }
