@@ -29,12 +29,23 @@ function weightedRandom(weights: number[]): string {
   return "";
 }
 
-export function experimentVariant(experimentName: string): number {
+export function experimentVariant(
+  experimentName: string,
+  variant = undefined
+): number {
   const experiment: Experiment | undefined = EXPERIMENTS.find(
     (exp: Experiment) => exp.name === experimentName
   );
 
-  if (!experiment) return 0;
+  if (experiment === undefined) {
+    return 0;
+  }
+
+  if (variant !== undefined) {
+    Cookies.set(`${COOKIE_PREFIX}_${experimentName}`, variant, {
+      expires: experiment.maxAgeDays,
+    });
+  }
 
   // Determine the active variant of the experiment
   let activeVariant: string =
@@ -59,7 +70,7 @@ export function experimentVariant(experimentName: string): number {
   if (reported.indexOf(experimentName) === -1) {
     if (EVENT_HANDLER === "ga" && window.ga) {
       window.ga("set", "exp", `${experiment.id}.${activeVariant}`);
-      window.ga('send', 'pageview');
+      window.ga("send", "pageview");
 
       reported.push(experimentName);
     } else if (EVENT_HANDLER === "dataLayer" && window.dataLayer) {
