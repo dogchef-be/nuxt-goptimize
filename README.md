@@ -27,6 +27,7 @@
 - TypeScript support
 - Cookies to persist variants across users
 - Event handlers `ga` or `dataLayer`
+- Force a specific variant. E.g. `this.$exp('experiment-x', 1);`
 
 ## Dependencies
 
