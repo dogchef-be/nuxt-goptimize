@@ -138,13 +138,21 @@ It can be used inside components like:
 {
   data: () => ({
     payBtnLabel: null as string | null,
+    isScenarioA: true,
   }),
   mounted() {
+    // Example 1: normal usage
     const activeVariant = this.$gexp('experiment-x');
     if (activeVariant === 0) {
       this.payBtnLabel = 'Place order';
     } else {
       this.payBtnLabel = 'Pay now!';
+    }
+    
+    // Example 2: force variant 1
+    if (isScenarioA) {
+      this.$gexp('experiment-y', 1)
+      // do something else..
     }
   }
 }
