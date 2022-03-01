@@ -150,7 +150,7 @@ It can be used inside components like:
     }
     
     // Example 2: force variant 1
-    if (isScenarioA) {
+    if (this.isScenarioA) {
       this.$gexp('experiment-y', 1)
       // do something else..
     }
