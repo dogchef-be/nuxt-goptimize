@@ -10,9 +10,10 @@
 </p>
 <br />
 
-***Note: Google Optimize is used for reporting (only).***
+**_Note: Google Optimize is used for reporting (only)._**
 
 ## Table of contents
+
 - [Main features](#main-features)
 - [Dependencies](#dependencies)
 - [Setup](#setup)
@@ -27,7 +28,7 @@
 - TypeScript support
 - Cookies to persist variants across users
 - Event handlers `ga` or `dataLayer`
-- Force a specific variant. E.g. `this.$exp('experiment-x', 1);`
+- Force a specific variant via url or param. E.g. `url?experiment-x=1` or `this.$exp('experiment-x', 1);`
 
 ## Dependencies
 
@@ -148,7 +149,7 @@ It can be used inside components like:
     } else {
       this.payBtnLabel = 'Pay now!';
     }
-    
+
     // Example 2: force variant 1
     if (this.isScenarioA) {
       this.$gexp('experiment-y', 1)
