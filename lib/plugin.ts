@@ -31,7 +31,7 @@ function weightedRandom(weights: number[]): string {
 
 export function experimentVariant(
   experimentName: string,
-  forceVariant = undefined
+  forceVariant = undefined as any
 ): number {
   const experiment: Experiment | undefined = EXPERIMENTS.find(
     (exp: Experiment) => exp.name === experimentName
@@ -41,15 +41,21 @@ export function experimentVariant(
     return 0;
   }
 
+  const key = `${COOKIE_PREFIX}_${experimentName}`;
+
+  // Force a specific variant by url or param
+  if (forceVariant === undefined) {
+    forceVariant = window.$nuxt.$route.query[key];
+  }
+
   if (forceVariant !== undefined) {
-    Cookies.set(`${COOKIE_PREFIX}_${experimentName}`, forceVariant, {
+    Cookies.set(key, forceVariant, {
       expires: experiment.maxAgeDays,
     });
   }
 
   // Determine the active variant of the experiment
-  let activeVariant: string =
-    Cookies.get(`${COOKIE_PREFIX}_${experimentName}`) || "";
+  let activeVariant: string = Cookies.get(key) || "";
 
   if (activeVariant.length === 0) {
     const weights: number[] = experiment.variants.map((weight) =>
@@ -61,7 +67,7 @@ export function experimentVariant(
       activeVariant = weightedRandom(weights);
     }
 
-    Cookies.set(`${COOKIE_PREFIX}_${experimentName}`, activeVariant, {
+    Cookies.set(key, activeVariant, {
       expires: experiment.maxAgeDays,
     });
   }
