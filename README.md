@@ -29,7 +29,7 @@
 - Cookies to persist variants across users
 - Event handlers `ga` or `dataLayer`
 - Force a specific variant via url or param. E.g. `url?experiment-x=1` or `this.$exp('experiment-x', 1);`
-- Disable all a/b tests by cookie (`abs_disabled=1`), which can be useful for E2E tests in CI/CD pipelines
+- Disable all a/b tests by cookie (`gopt_disabled=1`), which can be useful for E2E tests in CI/CD pipelines
 
 ## Dependencies
 
