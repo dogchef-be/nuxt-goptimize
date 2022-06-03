@@ -37,7 +37,7 @@ export function experimentVariant(
     (exp: Experiment) => exp.name === experimentName
   );
 
-  if (experiment === undefined || Cookies.get(`${COOKIE_PREFIX}_disabled`) == '1') {
+  if (experiment === undefined || Cookies.get(`${COOKIE_PREFIX}_disabled`) === '1') {
     return 0;
   }
 
