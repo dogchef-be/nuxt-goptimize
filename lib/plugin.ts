@@ -82,8 +82,9 @@ export function experimentVariant(
       reported.push(experimentName);
     } else if (EVENT_HANDLER === "dataLayer" && window.dataLayer) {
       window.dataLayer.push({
-        expId: experiment.id,
-        expVar: activeVariant,
+        'event': 'experiment_impression',
+        'experiment_id': experiment.id,
+        'variant_id': `${experiment.id}.${activeVariant}`,
       });
 
       reported.push(experimentName);
