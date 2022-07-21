@@ -28,7 +28,8 @@
 - TypeScript support
 - Cookies to persist variants across users
 - Event handlers `ga` or `dataLayer`
-- Force a specific variant via url or param. E.g. `url?experiment-x=1` or `this.$exp('experiment-x', 1);`
+- Force a specific variant via url or param. E.g. `url?abs_experiment-x=1` or `this.$abtest('experiment-x', true, 1);`
+- Avoid to activate the a/b test anywhere. E.g. `this.$abtest('experiment-x', false);`
 - Disable all a/b tests by cookie (`gopt_disabled=1`), which can be useful for E2E tests in CI/CD pipelines
 
 ## Dependencies
@@ -143,19 +144,22 @@ It can be used inside components like:
     isScenarioA: true,
   }),
   mounted() {
-    // Example 1: normal usage
-    const activeVariant = this.$gexp('experiment-x');
-    if (activeVariant === 0) {
+    // Scenario: Determine an experiment variant and then display a label depending on it.
+    const expA = this.$abtest('experiment-a');
+    if (expA === 0) {
       this.payBtnLabel = 'Place order';
     } else {
       this.payBtnLabel = 'Pay now!';
     }
 
-    // Example 2: force variant 1
-    if (this.isScenarioA) {
-      this.$gexp('experiment-y', 1)
-      // do something else..
-    }
+    // Scenario: We want to force a specific variant programmatically.
+    const expB = this.$abtest('experiment-b', true, 1);
+    console.log('expB is always 1');
+
+    // Scenario: We have steps and we want to avoid activating the a/b test in any step
+    // (meaning.. avoid assigning a variant and reporting it).
+    const expC = this.$abtest('experiment-c', false)
+    console.log('expC is always 0');
   }
 }
 ```
