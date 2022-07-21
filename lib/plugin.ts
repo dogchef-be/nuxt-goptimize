@@ -31,6 +31,7 @@ function weightedRandom(weights: number[]): string {
 
 export function experimentVariant(
   experimentName: string,
+  assignVariant = true,
   forceVariant?: number
 ): number {
   const experiment: Experiment | undefined = EXPERIMENTS.find(
@@ -68,9 +69,11 @@ export function experimentVariant(
       activeVariant = weightedRandom(weights);
     }
 
-    Cookies.set(cookieKey, activeVariant, {
-      expires: experiment.maxAgeDays,
-    });
+    if (assignVariant) {
+      Cookies.set(cookieKey, activeVariant, {
+        expires: experiment.maxAgeDays,
+      });
+    }
   }
 
   // Let Google know about the active experiment's variant
