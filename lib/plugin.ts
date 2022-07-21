@@ -31,6 +31,7 @@ function weightedRandom(weights: number[]): string {
 
 export function experimentVariant(
   experimentName: string,
+  assignVariant = true,
   forceVariant?: number
 ): number {
   const experiment: Experiment | undefined = EXPERIMENTS.find(
@@ -59,6 +60,12 @@ export function experimentVariant(
   let activeVariant: string = Cookies.get(cookieKey) || "";
 
   if (activeVariant.length === 0) {
+
+    // Return variant 0 if we don't want to assign a variant
+    if (!assignVariant) {
+      return 0
+    }
+
     const weights: number[] = experiment.variants.map((weight) =>
       weight === undefined ? 1 : weight
     );
