@@ -75,11 +75,9 @@ export function experimentVariant(
       activeVariant = weightedRandom(weights);
     }
 
-    if (assignVariant) {
-      Cookies.set(cookieKey, activeVariant, {
-        expires: experiment.maxAgeDays,
-      });
-    }
+    Cookies.set(cookieKey, activeVariant, {
+      expires: experiment.maxAgeDays,
+    });
   }
 
   // Let Google know about the active experiment's variant
