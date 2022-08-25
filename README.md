@@ -28,7 +28,7 @@
 - TypeScript support
 - Cookies to persist variants across users
 - Event handlers `ga` or `dataLayer`
-- Force a specific variant via url or param. E.g. `url?abs_experiment-x=1` or `this.$abtest('experiment-x', true, 1);`
+- Force a specific variant via url or param. E.g. `url?gopt_experiment-x=1` or `this.$abtest('experiment-x', true, 1);`
 - Avoid activating the a/b test anywhere. E.g. `this.$abtest('experiment-x', false);`
 - Disable all a/b tests by cookie (`gopt_disabled=1`), which can be useful for E2E tests in CI/CD pipelines
 
@@ -54,9 +54,9 @@ Type of experience: A/B test
 2. Add variants names:
 
 ```
-Original: this.$gexp('my_experiment') = 0
-Variant A: this.$gexp('my_experiment') = 1
-Variant B: this.$gexp('my_experiment') = 2
+Original: this.$abtest('my_experiment') = 0
+Variant A: this.$abtest('my_experiment') = 1
+Variant B: this.$abtest('my_experiment') = 2
 ```
 
 3. Define a page targeting:
@@ -90,7 +90,7 @@ export default {
 ```js
 /**
  * {
- *  name: string; A name to identify the experiment on this.$gexp('NAME_HERE')
+ *  name: string; A name to identify the experiment on this.$abtest('NAME_HERE')
  *  id: string; Experiment ID of Google Optimize
  *  maxAgeDays: number; Number of days to persist the cookie of user's active variant
  *  variants: number[]; An array of variants weights

@@ -102,7 +102,7 @@ export function experimentVariant(
 }
 
 const googleOptimizePlugin: Plugin = (ctx, inject): void => {
-  inject("gexp", experimentVariant);
+  inject("abtest", experimentVariant);
 };
 
 export default googleOptimizePlugin;
